@@ -429,6 +429,87 @@ p {
   background-color: #cc0000; /* Oscurece el rojo al pasar el ratón */
 
 }
+/* Clase para imágenes modernas y responsivas */
+.responsive-image {
+    display: block; /* Asegura que no haya espacio blanco a su alrededor */
+    max-width: 100%; /* Adapta la imagen al tamaño del contenedor */
+    height: auto; /* Mantiene la proporción original */
+    border-radius: 12px; /* Bordes redondeados para un diseño moderno */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra suave para profundidad */
+    object-fit: cover; /* Asegura que la imagen siempre se vea bien recortada */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transiciones suaves */
+}
+
+/* Efecto hover para interacción */
+.responsive-image:hover {
+    transform: scale(1.05); /* Amplía ligeramente la imagen al pasar el mouse */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Mayor profundidad en el hover */
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+    .responsive-image {
+        border-radius: 8px; /* Menos redondeado en pantallas pequeñas */
+    }
+}
+/* Contenedor con fondo negro semitransparente y texto blanco */
+.overlay-text-container {
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro con transparencia */
+    color: #ffffff; /* Texto blanco */
+    font-weight: 600; /* Texto ligeramente grueso */
+    padding: 1.5rem; /* Espaciado interno */
+    border-radius: 12px; /* Bordes redondeados */
+    max-width: 600px; /* Limita el ancho del contenedor */
+    margin: auto; /* Centra horizontalmente */
+    text-align: center; /* Centra el texto */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque para más elegancia */
+}
+
+/* Estilo para el párrafo */
+.overlay-text-container p {
+    font-size: 1rem; /* Tamaño del texto */
+    line-height: 1.6; /* Mejor legibilidad */
+    margin: 0; /* Elimina márgenes por defecto */
+}
+/* Estilo base para enlaces */
+a.modern-link {
+    color: #00ff7f; /* Verde vibrante que destaca */
+    text-decoration: none; /* Elimina el subrayado por defecto */
+    font-weight: 600; /* Texto ligeramente grueso */
+    font-size: 1rem; /* Tamaño de texto equilibrado */
+    position: relative; /* Necesario para los efectos decorativos */
+    transition: color 0.3s ease-in-out; /* Transición suave de color */
+}
+
+/* Efecto hover para interacción */
+a.modern-link:hover {
+    color: #ffffff; /* Cambia a blanco al pasar el ratón */
+}
+
+/* Línea decorativa debajo del enlace */
+a.modern-link::after {
+    content: ''; /* Línea decorativa */
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* Espaciado de la línea respecto al texto */
+    width: 0%; /* Inicia con un ancho de 0% */
+    height: 2px; /* Grosor de la línea */
+    background-color: #00ff7f; /* Color de la línea */
+    transition: width 0.3s ease-in-out; /* Animación de expansión */
+}
+
+/* Efecto hover para la línea decorativa */
+a.modern-link:hover::after {
+    width: 100%; /* La línea se expande completamente */
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    a.modern-link {
+        font-size: 0.9rem; /* Reduce el tamaño en pantallas pequeñas */
+    }
+}
   </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -446,8 +527,8 @@ p {
   <main>
     <section>
       <h2>Configurar Termux</h2>
-      <p>Descarga el archivo APK de F-Droid desde <a href="https://f-droid.org" target="_blank">aquí</a> e instálalo.</p>
-      <p>Abre Termux y escribe:</p>
+      <p class="sofadi-one-regular">Descarga el archivo APK de F-Droid desde <a href="https://f-droid.org" target="_blank" class="modern-link">aquí</a> e instálalo.</p>
+      <p class="sofadi-one-regular">Abre Termux y escribe:</p>
       
       <code>pkg upgrade -y</code>
       <button class="copy-button" data-copy="pkg upgrade -y">Copiar comando</button>
@@ -457,25 +538,34 @@ p {
     </section>
     <section>
       <h2>Instalar dependencias</h2>
-      <p>Escribe el siguiente comando:</p>
+      <p class="sofadi-one-regular">Escribe el siguiente comando:</p>
       <code>
         pkg remove libglvnd<br>
         pkg install git wget make python getconf zip apksigner clang binutils libglvnd-dev aapt which
       </code>
       <button class="copy-button" data-copy="pkg remove libglvnd && pkg install git wget make python getconf zip apksigner clang binutils libglvnd-dev aapt which">Copiar comando</button>
-      
+      <br><br>
       
       <code>git clone --recursive https://github.com/ManIsCat2/sm64coopdx.git</code>
       <button class="copy-button" data-copy="git clone --recursive https://github.com/ManIsCat2/sm64coopdx.git">Copiar comando</button>
-      <p class="alerta">¡Atención! Si bien la ROM ya no es necesaria para extraer ningún activo con derechos de autor, todavía es necesaria para la parte de audio de la compilación.
+      <br><br>
+      <p class="alerta sofadi-one-regular">¡Atención! Si bien la ROM ya no es necesaria para extraer ningún activo con derechos de autor, todavía es necesaria para la parte de audio de la compilación.
 
-Obtén tu archivo ROM en formato Z64 de 8 MB de Super Mario 64 estadounidense y cámbiale el nombre baserom.us.z64 antes de colocarlo en la raíz de tu teléfono (almacenamiento interno)..</p>
+Obtén tu archivo ROM en formato Z64 de 8 MB de Super Mario 64 estadounidense y cámbiale el nombre baserom.us.z64 antes de colocarlo en la raíz de tu teléfono (almacenamiento interno)..</p><br>
+
+<div style="max-width: 600px; margin: auto;">
+    <img src="baserom.gif" alt="sm64coopdx 32 bit android" class="responsive-image">
+<div class="overlay-text-container">
+    <p>Mueve tu baserom.us.z64 a la raíz para continuar con el siguiente comando y compilar para jugar sm64coopdx en Android.</p>
+</div>
+</div>
       <code>cp /storage/emulated/0/baserom.us.z64 sm64coopdx/baserom.us.z64 && cd sm64coopdx</code>
       <button class="copy-button" data-copy="cp /storage/emulated/0/baserom.us.z64 sm64coopdx/baserom.us.z64 && cd sm64coopdx">Copiar comando</button>
+      <br><br>
       
       <code>make -j$(nproc)</code>
       <button class="copy-button" data-copy="make -j$(nproc)">Copiar comando</button>
-     
+     <br><br>
       <code>cp build/us_pc/sm64coopdx.apk /storage/emulated/0</code>
       <button class="copy-button" data-copy="cp build/us_pc/sm64coopdx.apk /storage/emulated/0">Copiar comando</button>
     </section>
