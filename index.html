@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guía completa en español para compilar y jugar Super Mario 64 CoopDx en dispositivos Android de 32 y 64 bits usando Termux. ¡Configúralo fácilmente con nuestra ayuda!">
+    <meta name="keywords" content="Super Mario 64, sm64coopdx, Android, guía de compilación, Termux, 32 bits, 64 bits, juego multijugador, Mario CoopDx, tutorial en español">
+    <meta name="author" content="Sm64coopdx Android">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="es">
+    <meta name="theme-color" content="#1f1f1f">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Guía de Compilación de sm64coopdx para Android">
+    <meta property="og:description" content="Aprende a compilar y jugar sm64coopdx en Android. Compatible con dispositivos de 32 y 64 bits. ¡Sigue nuestra guía en español!">
+    <meta property="og:url" content="https://build.sm64coopandroid.online/">
+    <meta property="og:image" content="https://build.sm64coopandroid.online/logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Guía de Compilación de sm64coopdx para Android">
+    <meta name="twitter:description" content="Sigue esta guía en español para compilar sm64coopdx en Android. ¡Compatible con dispositivos de 32 y 64 bits!">
+    <meta name="twitter:image" content="https://build.sm64coopandroid.online/logo.png">
+
+    <!-- Recursos adicionales -->
+    <link rel="icon" type="image/x-icon" href="https://build.sm64coopandroid.online/favicon.ico">
+    <link rel="apple-touch-icon" href="https://build.sm64coopandroid.online/favicon.png">
+    <link rel="canonical" href="https://build.sm64coopandroid.online/">
+    <title>Guía de Compilación para sm64coopdx en Android</title>
+  <style>
+    /* Variables CSS para facilitar cambios globales */
+:root {
+  --font-family: 'Arial', sans-serif;
+  --font-size-base: 16px;
+  --line-height: 1.6;
+  --color-bg: #121212;
+  --color-text: #ffffff;
+  --color-primary: #1f1f1f;
+  --color-secondary: #333333;
+  --color-accent: #00ff7f;
+  --color-highlight: #ffcc00;
+  --color-button-hover: #555555;
+  --border-radius: 8px;
+  --transition: 0.3s ease;
+  --shadow-base: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--font-size-base);
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: var(--line-height);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Estilización del encabezado */
+header {
+  background-color: var(--color-primary);
+  padding: 1.5rem;
+  text-align: center;
+  border-bottom: 2px solid var(--color-accent);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+/* Estilo del contenido principal */
+main {
+  padding: 2rem;
+}
+
+section {
+  margin-bottom: 2.5rem;
+}
+
+/* Código y resaltado */
+code {
+  display: block;
+  background-color: var(--color-secondary);
+  padding: 1.2rem;
+  border-radius: var(--border-radius);
+  color: var(--color-accent);
+  overflow-x: auto;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-base);
+}
+
+/* Botón de copiar */
+button.copy-button {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+  font-size: 1rem;
+}
+
+button.copy-button:hover {
+  background-color: var(--color-button-hover);
+  transform: scale(1.05);
+}
+
+/* Pie de página */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: var(--color-primary);
+  font-size: 0.9rem;
+  border-top: 2px solid var(--color-accent);
+}
+
+/* Ventana emergente (popup) */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background-color: var(--color-highlight);
+  color: #000;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  font-size: 1.1rem;
+  font-family: var(--font-family);
+  box-shadow: var(--shadow-base);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+}
+
+.popup.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.popup.fade-out {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  code {
+    font-size: 0.85rem;
+  }
+
+  button.copy-button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}
+.anuncio {
+    background: linear-gradient(135deg, #ff0000, #ffcc00, #0066ff); /* Colores de Mario: rojo, amarillo y azul */
+    color: #ffffff; /* Texto blanco */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    text-align: center; /* Centra el texto */
+    font-size: 20px;
+    font-weight: bold;
+    max-width: 650px; /* Ancho máximo */
+    margin: 30px auto; /* Centra el div en la página */
+    border: 3px solid #ffffff; /* Borde blanco */
+    position: relative; /* Para posicionar elementos decorativos */
+}
+
+/* Efecto de brillos */
+.anuncio::before, 
+.anuncio::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    filter: blur(8px);
+}
+
+.anuncio::before {
+    width: 100px;
+    height: 100px;
+    top: -20px;
+    left: -20px;
+}
+
+.anuncio::after {
+    width: 80px;
+    height: 80px;
+    bottom: -20px;
+    right: -20px;
+}
+
+/* Animación sutil */
+.anuncio:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+.alerta {
+    background-color: #ffcc00; /* Color amarillo alerta */
+    color: #990000; /* Texto rojo oscuro */
+    padding: 15px 20px; /* Espaciado interno */
+    border-left: 5px solid #ff0000; /* Línea roja en el lateral */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    margin: 20px 0; /* Espaciado externo */
+    text-align: left; /* Texto alineado a la izquierda */
+    animation: parpadeo 1.5s infinite; /* Animación para dar efecto de atención */
+}
+
+/* Animación de parpadeo */
+@keyframes parpadeo {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+.sugerencia {
+    background-color: #e0f7fa; /* Azul claro para fondo */
+    color: #007bb6; /* Azul más oscuro para el texto */
+    padding: 15px 20px; /* Espaciado interno */
+    border-left: 5px solid #00acc1; /* Línea azul en el lateral */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    margin: 20px 0; /* Espaciado externo */
+    text-align: left; /* Texto alineado a la izquierda */
+    animation: deslizamiento 0.8s ease-out; /* Animación sutil al aparecer */
+}
+
+/* Animación de deslizamiento */
+@keyframes deslizamiento {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+.dmca {
+    background-color: #f8f9fa; /* Fondo gris claro */
+    color: #212529; /* Texto gris oscuro */
+    padding: 15px 20px; /* Espaciado interno */
+    border-left: 5px solid #dc3545; /* Línea roja para indicar seriedad */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px;
+    font-weight: 500; /* Peso medio del texto */
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    margin: 20px 0; /* Espaciado externo */
+    text-align: justify; /* Alineación justificada */
+    line-height: 1.6; /* Mejora la legibilidad */
+}
+
+/* Animación de enfoque */
+.dmca:hover {
+    background-color: #ffffff; /* Fondo más brillante al pasar el mouse */
+    transition: background-color 0.3s ease-in-out; /* Transición suave */
+}
+.resaltar {
+    background-color: #ffcc00; /* Fondo amarillo */
+    color: #d32f2f; /* Texto rojo oscuro */
+    font-weight: bold; /* Texto en negrita */
+    padding: 0 4px; /* Espaciado alrededor de la palabra */
+    border-radius: 3px; /* Bordes ligeramente redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+body {
+    background-image: url('fondo.webp');
+    background-size: cover; /* Asegura que la imagen cubra toda el área */
+    background-position: center center; /* Centra la imagen en el fondo */
+    background-attachment: fixed; /* Mantiene la imagen fija cuando se hace scroll */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Asegura que el fondo cubra toda la ventana del navegador */
+}
+h1 {
+  font-family: "Oswald", sans-serif;
+  font-size: 2.2em;
+  margin-bottom: 20px;
+}
+
+.highlight {
+  background-color: #3b82f6;
+  padding: 0 5px;
+  border-radius: 5px;
+}
+
+.highlight-red {
+  color: #ef4444;
+}
+
+.highlight-yellow {
+  color: #ef4;
+}
+
+
+p {
+  font-size: 1.2em;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+.sofadi-one-regular {
+  font-family: "Sofadi One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.guerrilla {
+  font-family: "Protest Guerrilla", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.oswald {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Contenedor principal */
+#custom-card-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0;
+}
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9; /* Mantiene proporción de video */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  background-color: #000; /* Fondo negro mientras se carga */
+}
+
+/* Estilos del iframe (video) */
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Título superior del video */
+.video-title {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  z-index: 1;
+}
+
+/* Texto inferior del video */
+.video-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  z-index: 1;
+}
+
+/* Botón de "Deja tu Like" */
+.like-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #ff0000; /* Rojo típico de YouTube */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.like-button:hover {
+  background-color: #cc0000; /* Oscurece el rojo al pasar el ratón */
+
+}
+  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oswald:wght@200..700&family=Protest+Guerrilla&family=Sofadi+One&display=swap" rel="stylesheet">
+
+	</head>
+</head>
+<body>
+  <header>
+    <h1 class="oswald">El <span class="highlight">mejor Mario 64</span> CoopDx Online</h1>
+      <p class="sofadi-one-regular"><span class="highlight-red">Sm64 CoopDx android</span> compatibilidad de Compilación para <span class="highlight-yellow">32 Bit y 64 Bit</span>. Descubre los nuevos ajustes y recibe la mejor ayuda.</p>
+    <h2 class="oswald">Guía de Compilación para Android</h2>
+    <p class="sugerencia">Beneficio: con esta guía vas a lograr compilar y jugar sm64coopdx en android para dispositivos de 32 Bit y 64 Bit ya que termux agarrara los bits de tu dispositivo para compilarlos para tu propia compatibilidad.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Configurar Termux</h2>
+      <p>Descarga el archivo APK de F-Droid desde <a href="https://f-droid.org" target="_blank">aquí</a> e instálalo.</p>
+      <p>Abre Termux y escribe:</p>
+      
+      <code>pkg upgrade -y</code>
+      <button class="copy-button" data-copy="pkg upgrade -y">Copiar comando</button>
+      <br><br>
+      <code>termux-setup-storage</code>
+      <button class="copy-button" data-copy="termux-setup-storage">Copiar comando</button>
+    </section>
+    <section>
+      <h2>Instalar dependencias</h2>
+      <p>Escribe el siguiente comando:</p>
+      <code>
+        pkg remove libglvnd<br>
+        pkg install git wget make python getconf zip apksigner clang binutils libglvnd-dev aapt which
+      </code>
+      <button class="copy-button" data-copy="pkg remove libglvnd && pkg install git wget make python getconf zip apksigner clang binutils libglvnd-dev aapt which">Copiar comando</button>
+      
+      
+      <code>git clone --recursive https://github.com/ManIsCat2/sm64coopdx.git</code>
+      <button class="copy-button" data-copy="git clone --recursive https://github.com/ManIsCat2/sm64coopdx.git">Copiar comando</button>
+      <p class="alerta">¡Atención! Si bien la ROM ya no es necesaria para extraer ningún activo con derechos de autor, todavía es necesaria para la parte de audio de la compilación.
+
+Obtén tu archivo ROM en formato Z64 de 8 MB de Super Mario 64 estadounidense y cámbiale el nombre baserom.us.z64 antes de colocarlo en la raíz de tu teléfono (almacenamiento interno)..</p>
+      <code>cp /storage/emulated/0/baserom.us.z64 sm64coopdx/baserom.us.z64 && cd sm64coopdx</code>
+      <button class="copy-button" data-copy="cp /storage/emulated/0/baserom.us.z64 sm64coopdx/baserom.us.z64 && cd sm64coopdx">Copiar comando</button>
+      
+      <code>make -j$(nproc)</code>
+      <button class="copy-button" data-copy="make -j$(nproc)">Copiar comando</button>
+     
+      <code>cp build/us_pc/sm64coopdx.apk /storage/emulated/0</code>
+      <button class="copy-button" data-copy="cp build/us_pc/sm64coopdx.apk /storage/emulated/0">Copiar comando</button>
+    </section>
+  </main>
+  <div class="video-container">
+    <div class="video-title">Sponsor Video</div>
+    <iframe 
+      src="https://www.youtube.com/embed/HvFm4GcBlGs" 
+      title="YouTube video" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen>
+    </iframe>
+    <div class="video-footer">Meta 200 Likes</div>
+  </div>
+
+  <!-- Botón debajo del video -->
+  <button class="like-button" onclick="redirectToLike()">Dejar Like👍</button>
+<br><br>
+  <p class="dmca">
+    Aviso DMCA: Este sitio no almacena ni distribuye contenido protegido por derechos de autor. Cada usuario es responsable de dónde y cómo adquiere sus herramientas. Este sitio tiene fines puramente informativos.
+</p>
+  <footer>
+    <p>© 2024 Guía en Español - sm64coopdx Android</p>
+  </footer>
+
+  <!-- Ventana emergente -->
+  <div id="popup" class="popup">¡Comando copiado!</div>
+
+  <script>
+    document.querySelectorAll('.copy-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const popup = document.getElementById('popup');
+        
+        // Copiar texto al portapapeles
+        navigator.clipboard.writeText(button.dataset.copy).then(() => {
+          // Mostrar ventana emergente
+          popup.classList.add('show');
+          
+          // Esperar 2 segundos y luego desvanecer
+          setTimeout(() => {
+            popup.classList.add('fade-out');
+            popup.addEventListener('transitionend', () => {
+              popup.classList.remove('show', 'fade-out');
+            }, { once: true });
+          }, 2000);
+        }).catch(err => {
+          console.error('Error al copiar al portapapeles: ', err);
+        });
+      });
+    });
+function redirectToLike() {
+  window.open("https://www.youtube.com/watch?v=HvFm4GcBlGs", "_blank");
+}
+  </script>
+  <script href="script.js"></script>
+</body>
+</html>
