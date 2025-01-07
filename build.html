@@ -13,7 +13,7 @@ ___  _  _ _ _    ___  ____ ____
 |__] |__| | |___ |__/ |___ |  \\
 EOF
 # https://stackoverflow.com/questions/34457830/press-any-key-to-abort-in-5-seconds
-if read -r -s -n 1 -t 5 -p "Pulsa cualquier tecla antes de 5 segundos oara cancelar..." key #key in a sense has no use at all
+if read -r -s -n 1 -t 5 -p "Pulsa cualquier tecla antes de 5 segundos para cancelar..." key #key in a sense has no use at all
 then
 	echo && echo $RESTART_INSTRUCTIONS
 	exit 0
@@ -52,6 +52,7 @@ else
 fi
 apt-mark hold bash
 yes | pkg upgrade -y
+rm build.sh
 yes | pkg remove libglvnd
 yes | pkg install git wget make python getconf zip apksigner clang binutils libglvnd-dev aapt which netcat-openbsd
 cd
