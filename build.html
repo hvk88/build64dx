@@ -1,0 +1,91 @@
+#!/bin/bash
+RESTART_INSTRUCTIONS="Entrando en el shell. Para reconstruir, desliza desde la parte superior de tu pantalla, toca la flecha en el lado derecho de la notificación de Termux, toca "Exit" y luego vuelve a abrir esta aplicación."
+if ! ls /storage/emulated/0 >/dev/null 2>&1
+then
+	yes | termux-setup-storage
+fi
+cat <<EOF
+____ ____ ____ ___ 
+|    |  | |  | |__]
+|___ |__| |__| |   
+___  _  _ _ _    ___  ____ ____
+|__] |  | | |    |  \ |___ |__/
+|__] |__| | |___ |__/ |___ |  \\
+EOF
+# https://stackoverflow.com/questions/34457830/press-any-key-to-abort-in-5-seconds
+if read -r -s -n 1 -t 5 -p "Pulsa cualquier tecla antes de 5 segundos oara cancelar..." key #key in a sense has no use at all
+then
+	echo && echo $RESTART_INSTRUCTIONS
+	exit 0
+fi
+echo 'Detectando baserom.us.z64. Puede tomar un tiempo.'
+if [ -f ~/baserom.us.z64 ]
+then
+	BASEROM_PATH=~/baserom.us.z64
+else
+	BASEROM_PATH=$(find /storage/emulated/0 -type f -exec md5sum {} + 2>/dev/null | grep '^20b854b239203baf6c961b850a4a51a2' | head -n1 | cut -d'/' -f2- | xargs -I "%" echo /%)
+fi
+BLOCKS_FREE=$(awk -F ' ' '{print $4}' <(df | grep emulated))
+if (( 2097152 > BLOCKS_FREE ))
+then
+	cat <<EOF
+____ _  _ _    _   
+|___ |  | |    |   
+|    |__| |___ |___
+EOF
+    echo '¡Tu dispositivo necesita al menos 2 GB de espacio libre para continuar!'
+	echo $RESTART_INSTRUCTIONS
+	exit 1
+fi
+if [ -z "${BASEROM_PATH}" ]
+then
+	cat <<EOF
+_  _ ____    ____ ____ _  _
+|\ | |  |    |__/ |  | |\/|
+| \| |__|    |  \ |__| |  |
+EOF
+    echo 'Ve a https://github.com/sanni/cartreader para aprender a obtener tu baserom.us.z64 o sigue la guía manual en:  https://build.sm64coopandroid.online/'
+	echo $RESTART_INSTRUCTIONS
+	exit 2
+else
+	cp "${BASEROM_PATH}" ~/baserom.us.z64
+fi
+apt-mark hold bash
+yes | pkg upgrade -y
+yes | pkg remove libglvnd
+yes | pkg install git wget make python getconf zip apksigner clang binutils libglvnd-dev aapt which netcat-openbsd
+cd
+if [ -d "sm64coopdx" ]
+then
+	cp "${BASEROM_PATH}" sm64coopdx/baserom.us.z64
+	cd sm64coopdx
+	git reset --hard HEAD
+	git pull origin android
+	git submodule update --init --recursive
+	make distclean
+else
+	git clone --recursive https://github.com/ManIsCat2/sm64coopdx.git
+	cp "${BASEROM_PATH}" sm64coopdx/baserom.us.z64
+	cd sm64coopdx
+fi
+make 2>&1 | tee build.log
+if ! [ -f build/us_pc/sm64coopdx.apk ]
+then
+	cat <<EOF
+____ ____ _ _    _  _ ____ ____
+|___ |__| | |    |  | |__/ |___
+|    |  | | |___ |__| |  \ |___
+EOF
+    echo 'Envia un Mensaje a Retired64 en Discord:'
+    cat build.log | nc termbin.com 9999
+	echo $RESTART_INSTRUCTIONS
+	exit 3
+fi
+cp build/us_pc/sm64coopdx.apk /storage/emulated/0
+cat <<EOF
+___  ____ _  _ ____
+|  \ |  | |\ | |___
+|__/ |__| | \| |___
+EOF
+echo 'Ve a tu administrador de archivos e instala sm64coopdx.apk ya esta ahí'
+echo $RESTART_INSTRUCTION
